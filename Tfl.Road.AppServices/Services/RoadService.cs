@@ -40,7 +40,7 @@ namespace Tfl.Road.AppServices.Services
                     };
 
                 case HttpStatusCode.NotFound:
-                    var body1 = JsonSerializer.Deserialize<BadResponse>(result.ResponseBody);
+                    var badResponseBody = JsonSerializer.Deserialize<BadResponse>(result.ResponseBody);
 
                     return new RoadStatus
                     {
@@ -48,7 +48,7 @@ namespace Tfl.Road.AppServices.Services
                         StatusSeverity = null,
                         StatusSeverityDescription = null,
                         IsError = true,
-                        ErrorMessage = body1.Message
+                        ErrorMessage = badResponseBody.Message
                     };
 
                 default:
