@@ -26,33 +26,34 @@ namespace Tfl.Road.AppServices.Services
 
             var result = _repository.GetById(road);
 
-            if (result.StatusCode == HttpStatusCode.OK)
+            switch (result.StatusCode)
             {
-                var body = JsonSerializer.Deserialize<TflRoadEntity>(result.ResponseBody);
-                return new RoadStatus
-                {
-                    DisplayName = body.DisplayName,
-                    StatusSeverity = body.StatusSeverity,
-                    StatusSeverityDescription = body.StatusSeverityDescription,
-                    IsError = false,
-                    ErrorMessage = string.Empty
-                };
-            }
-            else if (result.StatusCode == HttpStatusCode.NotFound)
-            {
-                var body = JsonSerializer.Deserialize<BadResponse>(result.ResponseBody);
+                case HttpStatusCode.OK:
+                    var body = JsonSerializer.Deserialize<TflRoadEntity>(result.ResponseBody);
+                    return new RoadStatus
+                    {
+                        DisplayName = body.DisplayName,
+                        StatusSeverity = body.StatusSeverity,
+                        StatusSeverityDescription = body.StatusSeverityDescription,
+                        IsError = false,
+                        ErrorMessage = string.Empty
+                    };
 
-                return new RoadStatus
-                {
-                    DisplayName = null,
-                    StatusSeverity = null,
-                    StatusSeverityDescription = null,
-                    IsError = true,
-                    ErrorMessage = body.Message
-                };
+                case HttpStatusCode.NotFound:
+                    var body1 = JsonSerializer.Deserialize<BadResponse>(result.ResponseBody);
+
+                    return new RoadStatus
+                    {
+                        DisplayName = null,
+                        StatusSeverity = null,
+                        StatusSeverityDescription = null,
+                        IsError = true,
+                        ErrorMessage = body1.Message
+                    };
+
+                default:
+                    throw new NotImplementedException("We shouldn't hit this");
             }
-            
-            throw new NotImplementedException("We shouldn't hit this");
         }
     }
 }

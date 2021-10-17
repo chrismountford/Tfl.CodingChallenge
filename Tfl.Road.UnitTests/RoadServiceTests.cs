@@ -88,8 +88,9 @@ namespace Tfl.Road.UnitTests
 
             var responseBody = JsonSerializer.Serialize(new BadResponse
             {
+                // We only really care about the Message property here
                 Type = "",
-                TimeStampUtc = "",
+                TimeStampUtc = DateTime.Now,
                 ExceptionType = "",
                 HttpStatusCode = HttpStatusCode.NotFound,
                 HttpStatus = "NotFound",
