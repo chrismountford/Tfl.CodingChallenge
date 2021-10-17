@@ -7,9 +7,21 @@ namespace Tfl.Road.AppServices.Services
 {
     public class RoadService : IRoadService
     {
-        public List<RoadModel> GetByRoad(string road)
+        public RoadStatus GetByRoad(string road)
         {
-            throw new ArgumentNullException();
+            if (road == null)
+            {
+                throw new ArgumentNullException(nameof(road));
+            }
+
+            return new RoadStatus
+            {
+                DisplayName = "A10",
+                StatusSeverity = "Good",
+                StatusSeverityDescription = "No Exceptional Delays",
+                IsError = false,
+                ErrorMessage = string.Empty
+            };
         }
     }
 }

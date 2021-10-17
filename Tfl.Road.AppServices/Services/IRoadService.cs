@@ -5,6 +5,6 @@ namespace Tfl.Road.AppServices.Services
 {
     public interface IRoadService
     {
-        List<RoadModel> GetByRoad(string road);
+        RoadStatus GetByRoad(string road);
     }
 }
