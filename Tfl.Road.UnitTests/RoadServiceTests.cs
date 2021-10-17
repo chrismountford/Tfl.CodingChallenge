@@ -1,11 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Tfl.Road.AppServices.Models;
 using Tfl.Road.AppServices.Repositories;
 using Tfl.Road.AppServices.Services;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Tfl.Road.UnitTests
 {
@@ -42,16 +44,19 @@ namespace Tfl.Road.UnitTests
                 IsError = false,
                 ErrorMessage = string.Empty
             };
+
+            var responseBody = JsonSerializer.Serialize(new TflRoadEntity
+            {
+                Id = "A10",
+                DisplayName = "A10",
+                StatusSeverity = "Good",
+                StatusSeverityDescription = "No Exceptional Delays"
+            });
+
             var validResponse = new ApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                ResponseBody = new TflRoadEntity
-                {
-                    Id = "A10",
-                    DisplayName = "A10",
-                    StatusSeverity = "Good",
-                    StatusSeverityDescription = "No Exceptional Delays"
-                }
+                ResponseBody = responseBody
             };
 
             repoMock.Setup(x => x.GetById("A10")).Returns(validResponse);
@@ -64,6 +69,51 @@ namespace Tfl.Road.UnitTests
             Assert.AreEqual(roadStatus.StatusSeverity, result.StatusSeverity);
             Assert.AreEqual(roadStatus.StatusSeverityDescription, result.StatusSeverityDescription);
             Assert.IsFalse(result.IsError);
+        }
+
+        [Test]
+        public void GetByRoad_ShouldReturnInvalidResponse_WhenRoadIsNotValid()
+        {
+            // Arrange
+            var badRoad = "a10fdffdf";
+            var errorMessage = $"The following road id is not recognised: {badRoad}";
+            var roadStatus = new RoadStatus()
+            {
+                DisplayName = null,
+                StatusSeverity = null,
+                StatusSeverityDescription = null,
+                IsError = true,
+                ErrorMessage = errorMessage
+            };
+
+            var responseBody = JsonSerializer.Serialize(new BadResponse
+            {
+                Type = "",
+                TimeStampUtc = "",
+                ExceptionType = "",
+                HttpStatusCode = HttpStatusCode.NotFound,
+                HttpStatus = "NotFound",
+                RelativeUri = "",
+                Message = errorMessage
+            });
+
+            var invalidResponse = new ApiResponse
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                ResponseBody = responseBody
+            };
+
+            repoMock.Setup(x => x.GetById("a10fdffdf")).Returns(invalidResponse);
+
+            // Act
+            var result = roadService.GetByRoad(badRoad);
+
+            // Assert
+            Assert.IsNull(result.DisplayName);
+            Assert.IsNull(result.StatusSeverity);
+            Assert.IsNull(result.StatusSeverityDescription);
+            Assert.IsTrue(result.IsError);
+            Assert.AreEqual(roadStatus.ErrorMessage, result.ErrorMessage);
         }
     }
 }
