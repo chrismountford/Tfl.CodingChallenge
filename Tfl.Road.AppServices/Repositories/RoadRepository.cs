@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Tfl.Road.AppServices.Models;
 
 namespace Tfl.Road.AppServices.Repositories
 {
     public class RoadRepository : IRoadRepository
     {
-        public List<TflRoadEntity> GetById(string id)
+        public ApiResponse GetById(string id)
         {
-            throw new ArgumentNullException(nameof(id));
+            return new ApiResponse();
         }
     }
 }

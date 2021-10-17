@@ -5,6 +5,6 @@ namespace Tfl.Road.AppServices.Repositories
 {
     public interface IRoadRepository
     {
-        List<TflRoadEntity> GetById(string id);
+        ApiResponse GetById(string id);
     }
 }
