@@ -1,8 +1,6 @@
 using System;
 using System.Net;
-using System.Text.Json;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Tfl.Road.AppServices.Models;
 using Tfl.Road.AppServices.Repositories;
