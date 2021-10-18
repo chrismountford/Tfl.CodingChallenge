@@ -10,12 +10,11 @@ namespace Tfl.Road.UnitTests
     [TestFixture]
     public class RoadRepositoryTests
     {
+        private IRoadRepository repo = new RoadRepository();
+
         [Test]
         public void GetById_ShouldThrowException_WhenIdIsNull()
         {
-            // Arrange
-            IRoadRepository repo = new RoadRepository();
-
             // Act, Assert
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -26,9 +25,6 @@ namespace Tfl.Road.UnitTests
         [Test]
         public void GetById_ReturnsCorrectApiResponse_WhenIdIsValidRoad()
         {
-            // Arrange
-            IRoadRepository repo = new RoadRepository();
-
             // Act
             var result = repo.GetById("A10");
 
