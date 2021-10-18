@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Moq;
 using NUnit.Framework;
@@ -43,13 +44,17 @@ namespace Tfl.Road.UnitTests
                 ErrorMessage = string.Empty
             };
 
-            var responseBody = JsonSerializer.Serialize(new TflRoadEntity
-            {
-                Id = "A10",
-                DisplayName = "A10",
-                StatusSeverity = "Good",
-                StatusSeverityDescription = "No Exceptional Delays"
-            });
+            var responseBody = JsonSerializer.Serialize(new List<TflRoadEntity>
+                {
+                    new TflRoadEntity
+                    {
+                        Id = "A10",
+                        DisplayName = "A10",
+                        StatusSeverity = "Good",
+                        StatusSeverityDescription = "No Exceptional Delays"
+                    }
+                }
+            );
 
             var validResponse = new ApiResponse
             {

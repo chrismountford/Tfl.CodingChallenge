@@ -29,12 +29,12 @@ namespace Tfl.Road.AppServices.Services
             switch (result.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var body = JsonSerializer.Deserialize<TflRoadEntity>(result.ResponseBody);
+                    var body = JsonSerializer.Deserialize<List<TflRoadEntity>>(result.ResponseBody);
                     return new RoadStatus
                     {
-                        DisplayName = body.DisplayName,
-                        StatusSeverity = body.StatusSeverity,
-                        StatusSeverityDescription = body.StatusSeverityDescription,
+                        DisplayName = body[0].DisplayName,  // We should check to see if there is more than 1, should be safe for this challenge though...
+                        StatusSeverity = body[0].StatusSeverity,
+                        StatusSeverityDescription = body[0].StatusSeverityDescription,
                         IsError = false,
                         ErrorMessage = string.Empty
                     };
