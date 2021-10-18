@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using Tfl.Road.AppServices.Models;
 
@@ -9,7 +10,16 @@ namespace Tfl.Road.AppServices.Repositories
     {
         public ApiResponse GetById(string id)
         {
-            return new ApiResponse();
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            return new ApiResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                ResponseBody = "Good response"
+            };
         }
     }
 }
