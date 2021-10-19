@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 using Tfl.Road.AppServices.Models;
 
 namespace Tfl.Road.AppServices.Repositories
@@ -9,10 +10,12 @@ namespace Tfl.Road.AppServices.Repositories
     public class RoadRepository : IRoadRepository
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _config;
 
-        public RoadRepository(HttpClient httpClient)
+        public RoadRepository(HttpClient httpClient, IConfiguration config)
         {
             _httpClient = httpClient;
+            _config = config;
         }
 
         public ApiResponse GetById(string id)
@@ -22,7 +25,10 @@ namespace Tfl.Road.AppServices.Repositories
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var uri = $"https://api.tfl.gov.uk/Road/{id}";
+            var url = _config["Url"];
+            var appKey = _config["apiKey"];
+            var appId = _config["appId"];
+            var uri = $"{url}{id}?app_id={appId}&app_key={appKey}";
 
             var response = _httpClient.GetAsync(uri).Result;
 

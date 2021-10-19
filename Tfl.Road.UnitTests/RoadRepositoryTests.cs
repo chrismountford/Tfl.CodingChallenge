@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -16,12 +17,6 @@ namespace Tfl.Road.UnitTests
     public class RoadRepositoryTests
     {
         private IRoadRepository repo;
-
-        //[Setup]
-        //public void Setup()
-        //{
-            
-        //}
 
         [Test]
         public void GetById_ShouldThrowException_WhenIdIsNull()
@@ -54,7 +49,22 @@ namespace Tfl.Road.UnitTests
             {
                 BaseAddress = new Uri("http://something.com")
             };
-            repo = new RoadRepository(client);
+
+            //var config = new Mock<IConfiguration>();
+            //config.Setup(x => x[It.Is<string>(s => s == "ApiKey")]).Returns("FakeKey");
+            //config.Setup(x => x[It.Is<string>(s => s == "AppId")]).Returns("FakeId");
+
+            var configSettings = new Dictionary<string, string>
+            {
+                {"apiKey", "KEY"},
+                {"appId", "ID"}
+            };
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(configSettings)
+                .Build();
+
+            repo = new RoadRepository(client, config);
             var result = repo.GetById("A10");
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
