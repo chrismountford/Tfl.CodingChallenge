@@ -1,3 +1,6 @@
+### Updating configuration
+Update the two configuration values (apiKey, appId) in Tfl.Console/appSettings.json with your values
+
 ### Building
 In Visual Studio: Select Build from drop down at the top and click on Build
 Powershell: cd to directory with solution, then run 
