@@ -44,7 +44,7 @@ namespace Tfl.Road.AppServices.Services
 
                     return new RoadStatus
                     {
-                        DisplayName = null,
+                        DisplayName = road,
                         StatusSeverity = null,
                         StatusSeverityDescription = null,
                         IsError = true,

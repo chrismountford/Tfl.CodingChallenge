@@ -28,5 +28,28 @@ namespace Tfl.Road.UnitTests
             // Assert
             Assert.AreEqual(expectedOutput, result);
         }
+
+        [Test]
+        public void Format_ShouldReturnCorrectString_For404Response()
+        {
+            // Arrange
+            var formatter = new OutputFormatter();
+            var badResponse = new RoadStatus()
+            {
+                DisplayName = "A233",
+                StatusSeverity = null,
+                StatusSeverityDescription = null,
+                IsError = true,
+                ErrorMessage = "The following road id is not recognised: A233"
+            };
+
+            var expectedOutput = @"A233 is not a valid road";
+
+            // Act
+            var result = formatter.Format(badResponse);
+
+            // Assert
+            Assert.AreEqual(expectedOutput, result);
+        }
     }
 }

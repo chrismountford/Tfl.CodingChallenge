@@ -82,7 +82,7 @@ namespace Tfl.Road.UnitTests
             var errorMessage = $"The following road id is not recognised: {badRoad}";
             var roadStatus = new RoadStatus()
             {
-                DisplayName = null,
+                DisplayName = badRoad,
                 StatusSeverity = null,
                 StatusSeverityDescription = null,
                 IsError = true,
@@ -113,7 +113,7 @@ namespace Tfl.Road.UnitTests
             var result = roadService.GetByRoad(badRoad);
 
             // Assert
-            Assert.IsNull(result.DisplayName);
+            Assert.AreEqual(badRoad, result.DisplayName);
             Assert.IsNull(result.StatusSeverity);
             Assert.IsNull(result.StatusSeverityDescription);
             Assert.IsTrue(result.IsError);
