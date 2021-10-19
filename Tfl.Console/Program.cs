@@ -6,15 +6,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Tfl.Console
 {
-    // TODO: Format output
     class Program
     {
         static void Main(string[] args)
         {
-            //if (args.Length != 1)
-            //{
-            //    throw new NotImplementedException("You should just enter one argument");
-            //}
+            if (args.Length != 1)
+            {
+                throw new NotImplementedException("You should just enter one argument");
+            }
 
             var builder = new ConfigurationBuilder();
             builder.AddJsonFile("appSettings.json");
@@ -23,7 +22,7 @@ namespace Tfl.Console
 
             var serviceProvider = ConfigureServices(config);
 
-            Run(serviceProvider, "A10");
+            Run(serviceProvider, args[0]);
         }
 
         private static void Run(IServiceProvider serviceProvider, string road)
@@ -38,7 +37,8 @@ namespace Tfl.Console
 
             var output = formatter.Format(roadService.GetByRoad(road));
 
-            System.Console.WriteLine(output);
+            System.Console.WriteLine(output.OutputText);
+            Environment.ExitCode = output.ExitCode;
         }
 
         private static IServiceProvider ConfigureServices(IConfiguration config)
@@ -52,12 +52,6 @@ namespace Tfl.Console
                 .BuildServiceProvider();
 
             return serviceProvider;
-        }
-
-        private static void BuildConfig(IConfigurationBuilder builder)
-        {
-            builder.AddJsonFile("appSettings.json")
-                .Build();
         }
     }
 }
