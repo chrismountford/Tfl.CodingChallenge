@@ -6,6 +6,6 @@ namespace Tfl.Road.AppServices.Services
 {
     public interface IOutputFormatter
     {
-        string Format(RoadStatus status);
+        Output Format(RoadStatus status);
     }
 }

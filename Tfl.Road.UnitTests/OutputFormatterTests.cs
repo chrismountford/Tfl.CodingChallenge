@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Tfl.Road.AppServices;
 using Tfl.Road.AppServices.Services;
 
 namespace Tfl.Road.UnitTests
@@ -20,15 +21,20 @@ namespace Tfl.Road.UnitTests
                 ErrorMessage = string.Empty
             };
 
-            var expectedOutput = @"The status of the A10 is as follows
+            var expectedOutput = new Output
+            {
+                ExitCode = 0,
+                OutputText = @"The status of the A10 is as follows
 Road Status is Good
-Road Status Description is No Exceptional Delays";
+Road Status Description is No Exceptional Delays"
+        };
 
             // Act
             var result = formatter.Format(goodResponse);
 
             // Assert
-            Assert.AreEqual(expectedOutput, result);
+            Assert.AreEqual(expectedOutput.OutputText, result.OutputText);
+            Assert.AreEqual(expectedOutput.ExitCode, 0);
         }
 
         [Test]
@@ -45,13 +51,18 @@ Road Status Description is No Exceptional Delays";
                 ErrorMessage = "The following road id is not recognised: A233"
             };
 
-            var expectedOutput = @"A233 is not a valid road";
+            var expectedOutput = new Output
+            {
+                ExitCode = 1,
+                OutputText = @"A233 is not a valid road"
+            };
 
             // Act
             var result = formatter.Format(badResponse);
 
             // Assert
-            Assert.AreEqual(expectedOutput, result);
+            Assert.AreEqual(expectedOutput.OutputText, result.OutputText);
+            Assert.AreEqual(expectedOutput.ExitCode, 1);
         }
     }
 }

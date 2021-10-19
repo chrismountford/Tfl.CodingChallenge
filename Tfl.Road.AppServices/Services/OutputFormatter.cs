@@ -2,16 +2,25 @@
 {
     public class OutputFormatter : IOutputFormatter
     {
-        public string Format(RoadStatus status)
+        public Output Format(RoadStatus status)
         {
+            Output output;
             if (status.IsError)
             {
-                return $"{status.DisplayName} is not a valid road";
+                return new Output
+                {
+                    ExitCode = 0,
+                    OutputText = $"{status.DisplayName} is not a valid road"
+                };
             }
 
-            return @$"The status of the {status.DisplayName} is as follows
+            return new Output
+            {
+                ExitCode = 1,
+                OutputText = @$"The status of the {status.DisplayName} is as follows
 Road Status is {status.StatusSeverity}
-Road Status Description is {status.StatusSeverityDescription}";
+Road Status Description is {status.StatusSeverityDescription}"
+            };
         }
     }
 }
