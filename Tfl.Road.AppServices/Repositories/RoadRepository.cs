@@ -25,9 +25,9 @@ namespace Tfl.Road.AppServices.Repositories
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var url = _config["Url"];
-            var appKey = _config["apiKey"];
-            var appId = _config["appId"];
+            var url = _config["Config:Url"];
+            var appKey = _config["Config:apiKey"];
+            var appId = _config["Config:appId"];
             var uri = $"{url}{id}?app_id={appId}&app_key={appKey}";
 
             var response = _httpClient.GetAsync(uri).Result;

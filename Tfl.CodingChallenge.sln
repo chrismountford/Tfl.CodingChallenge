@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tfl.Console", "Tfl.Console\Tfl.Console.csproj", "{D5C49E36-8367-4DBF-BC86-5952CB144F5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tfl.Road.AppServices", "Tfl.Road.AppServices\Tfl.Road.AppServices.csproj", "{B8C2E9B5-6B70-4299-9286-B39E3F96C8D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tfl.Road.AppServices", "Tfl.Road.AppServices\Tfl.Road.AppServices.csproj", "{B8C2E9B5-6B70-4299-9286-B39E3F96C8D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tfl.Road.UnitTests", "Tfl.Road.UnitTests\Tfl.Road.UnitTests.csproj", "{8EAF6B38-C612-49B5-9EE6-10BD2106B444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tfl.Road.UnitTests", "Tfl.Road.UnitTests\Tfl.Road.UnitTests.csproj", "{8EAF6B38-C612-49B5-9EE6-10BD2106B444}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F68A8B3-73F2-4891-BDBB-F8552CE0B691}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

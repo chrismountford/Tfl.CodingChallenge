@@ -1,15 +1,59 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Tfl.Road.AppServices.Repositories;
+using Tfl.Road.AppServices.Services;
+using System;
+using Microsoft.Extensions.Configuration;
 
-namespace Tfl.Road.AppServices
+namespace Tfl.Console
 {
+    // TODO: Format output
     class Program
     {
         static void Main(string[] args)
         {
-            // TODO Create client factory
-            // TODO DI
+            //if (args.Length != 1)
+            //{
+            //    throw new NotImplementedException("You should just enter one argument");
+            //}
 
-            Console.WriteLine("hey");
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appSettings.json");
+
+            IConfiguration config = builder.Build();
+
+            var serviceProvider = ConfigureServices(config);
+
+            Run(serviceProvider, "A10");
+        }
+
+        private static void Run(IServiceProvider serviceProvider, string road)
+        {
+            var service = serviceProvider.GetService<IRoadService>();
+
+            if (service == null)
+            {
+                throw new NullReferenceException("Road service needs to be configured");
+            }
+
+            service.GetByRoad(road);
+        }
+
+        private static IServiceProvider ConfigureServices(IConfiguration config)
+        {
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<IRoadService, RoadService>()
+                .AddSingleton<IRoadRepository, RoadRepository>()
+                .AddSingleton(config)
+                .AddHttpClient()
+                .BuildServiceProvider();
+
+            return serviceProvider;
+        }
+
+        private static void BuildConfig(IConfigurationBuilder builder)
+        {
+            builder.AddJsonFile("appSettings.json")
+                .Build();
         }
     }
 }
