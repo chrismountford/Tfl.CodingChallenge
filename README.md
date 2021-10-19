@@ -21,7 +21,15 @@ Then run:
 
 
 ### Running tests
-In Visual 
+In Visual Studio:
+Select Test drop down, Run All Tests
+
+Or
+
+cd to .\Tfl.CodingChallenge\Tfl.Road.UnitTests
+then run:
+> dotnet test
+
 
 ### Assumptions
 - A 200 response from the api will be a list containing only one entity
