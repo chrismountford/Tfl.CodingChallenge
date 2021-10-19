@@ -20,7 +20,9 @@ namespace Tfl.Road.UnitTests
                 ErrorMessage = string.Empty
             };
 
-            var expectedOutput = @"The status of the A10 is as follows\r\nRoad Status is Good\r\nRoad Status Description is No Exceptional Delays";
+            var expectedOutput = @"The status of the A10 is as follows
+Road Status is Good
+Road Status Description is No Exceptional Delays";
 
             // Act
             var result = formatter.Format(goodResponse);

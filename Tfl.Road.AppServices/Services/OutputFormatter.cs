@@ -9,7 +9,9 @@
                 return $"{status.DisplayName} is not a valid road";
             }
 
-            return @$"The status of the {status.DisplayName} is as follows\r\nRoad Status is {status.StatusSeverity}\r\nRoad Status Description is {status.StatusSeverityDescription}";
+            return @$"The status of the {status.DisplayName} is as follows
+Road Status is {status.StatusSeverity}
+Road Status Description is {status.StatusSeverityDescription}";
         }
     }
 }

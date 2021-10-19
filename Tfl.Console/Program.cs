@@ -28,14 +28,17 @@ namespace Tfl.Console
 
         private static void Run(IServiceProvider serviceProvider, string road)
         {
-            var service = serviceProvider.GetService<IRoadService>();
+            var roadService = serviceProvider.GetService<IRoadService>();
+            var formatter = serviceProvider.GetService<IOutputFormatter>();
 
-            if (service == null)
+            if (roadService == null || formatter == null)
             {
-                throw new NullReferenceException("Road service needs to be configured");
+                throw new NullReferenceException("You need to register services correctly");
             }
 
-            service.GetByRoad(road);
+            var output = formatter.Format(roadService.GetByRoad(road));
+
+            System.Console.WriteLine(output);
         }
 
         private static IServiceProvider ConfigureServices(IConfiguration config)
@@ -43,6 +46,7 @@ namespace Tfl.Console
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IRoadService, RoadService>()
                 .AddSingleton<IRoadRepository, RoadRepository>()
+                .AddSingleton<IOutputFormatter, OutputFormatter>()
                 .AddSingleton(config)
                 .AddHttpClient()
                 .BuildServiceProvider();
