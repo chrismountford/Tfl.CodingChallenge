@@ -34,7 +34,7 @@ Road Status Description is No Exceptional Delays"
 
             // Assert
             Assert.AreEqual(expectedOutput.OutputText, result.OutputText);
-            Assert.AreEqual(expectedOutput.ExitCode, 0);
+            Assert.AreEqual(expectedOutput.ExitCode, result.ExitCode);
         }
 
         [Test]
@@ -62,7 +62,7 @@ Road Status Description is No Exceptional Delays"
 
             // Assert
             Assert.AreEqual(expectedOutput.OutputText, result.OutputText);
-            Assert.AreEqual(expectedOutput.ExitCode, 1);
+            Assert.AreEqual(expectedOutput.ExitCode, result.ExitCode);
         }
     }
 }
